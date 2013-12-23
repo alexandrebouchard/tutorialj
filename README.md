@@ -7,11 +7,11 @@ Goal
 ----
 
 While javadoc provides an effective way of building encyclopedic access to 
-java code repositories, it is less useful for introducing a new user to a 
+java code repositories, it is less adapted to the task of introducing a new user to a 
 code base.
 
-The goal of tutorialj is to provide guided tours of code repository through
-tutorials generated from annotated javadoc-style comments. 
+The goal of tutorialj is to help creating guided code tours via
+java annotation and markdown generation. 
 
 Installation
 ------------
@@ -56,4 +56,15 @@ ran from the repository root.
 See ``tutorialj.Example`` for the generating source.
 
 
+
+```java
+@java.lang.annotation.Retention(value = java.lang.annotation.RetentionPolicy.SOURCE)
+@java.lang.annotation.Target(value = {java.lang.annotation.ElementType.CONSTRUCTOR ,java.lang.annotation.ElementType.FIELD ,java.lang.annotation.ElementType.METHOD ,java.lang.annotation.ElementType.TYPE})
+public @interface Tutorial {
+    boolean showSource() default false;
+    
+    double order() default 0.0;
+    
+}
+```
 

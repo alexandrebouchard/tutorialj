@@ -9,8 +9,13 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.SOURCE)
 @Target({ElementType.CONSTRUCTOR,ElementType.FIELD, ElementType.METHOD, ElementType.TYPE})
+/**
+ * API
+ * ---
+ */
+@Tutorial(order=3,showSource=true)
 public @interface Tutorial
 {
   boolean showSource() default false;
-  int order() default 0;
+  double order() default 0.0;
 }
