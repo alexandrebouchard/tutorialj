@@ -16,5 +16,5 @@ import java.lang.annotation.Target;
 public @interface Tutorial
 {
   boolean showSource() default false;
-  double order() default 0.0;
+  double order() default 0.0; // TODO: for methods/fields/constructors, make it inherit order in file by default
 }

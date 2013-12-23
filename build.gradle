@@ -8,25 +8,13 @@ group = 'bouchard'
 version = '0.0'
 uploadArchives {
   repositories.mavenDeployer {
-    repository(url: "file:///Users/bouchard/Documents/maven")
+    repository(url: "file:///Users/bouchard/Documents/web/public_html/maven/")
+    pom.version = "1.0"
+  	pom.artifactId = "tutorialj"
+  	pom.groupId = "com.3rdf"
   }
-}
 
-// To include submodules:
-// 0: mkdir lib
-// 1: git submodule add https://abouchard@bitbucket.org/abouchard/binc.git  lib/binc
-// 2: git submodule foreach git pull
-//task pullsubmodules(type:Exec) {
-//  commandLine 'git', 'submodule', 'foreach', 'git', 'pull'
-//}
-//compileJava.dependsOn pullsubmodules
-//sourceSets {
-//  main {
-//    java {
-//      srcDir 'lib/binc/src/main/java'
-//    }
-//  }
-//}
+}
 
 apply plugin: 'eclipse'
 eclipse { 
@@ -52,7 +40,6 @@ buildscript {
 repositories {
   mavenCentral()
   maven {
-    url "file:///Users/bouchard/Documents/maven"
     url "http://spoon.gforge.inria.fr/repositories/releases/"
   }
 }
