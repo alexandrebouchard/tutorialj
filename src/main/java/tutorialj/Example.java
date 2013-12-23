@@ -11,11 +11,11 @@ package tutorialj;
  * ----
  * 
  * While javadoc provides an effective way of building encyclopedic access to 
- * java code repositories, it is less useful for introducing a new user to a 
+ * java code repositories, it is less adapted to the task of introducing a new user to a 
  * code base.
  * 
- * The goal of tutorialj is to provide guided tours of code repository through
- * tutorials generated from annotated javadoc-style comments. 
+ * The goal of tutorialj is to help creating guided code tours via
+ * java annotation and markdown generation. 
  * 
  * Installation
  * ------------
