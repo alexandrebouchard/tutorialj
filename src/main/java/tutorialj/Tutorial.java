@@ -8,10 +8,9 @@ import java.lang.annotation.Target;
 
 
 @Retention(RetentionPolicy.SOURCE)
-//@Target({ElementType.CONSTRUCTOR,ElementType.FIELD, ElementType.METHOD, ElementType.TYPE})
+@Target({ElementType.CONSTRUCTOR,ElementType.FIELD, ElementType.METHOD, ElementType.TYPE})
 public @interface Tutorial
 {
   boolean showSource() default false;
-//  public String next();
-//  public Class<?> nextClass();
+  int order() default 0;
 }
