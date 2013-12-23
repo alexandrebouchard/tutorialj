@@ -32,7 +32,6 @@ public class TutorialNode implements Comparable<TutorialNode>
   public String toString()
   {
     StringBuilder result = new StringBuilder();
-    result.append("Signature:" + element.getSignature() + "\n");
     String comments = element.getDocComment();
     if (comments != null)
       result.append(removeFirstSpaceOfEachLine(comments) + "\n");

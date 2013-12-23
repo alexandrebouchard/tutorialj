@@ -22,8 +22,6 @@ package tutorialj;
  * 
  * TODO
  * 
- * @author Alexandre Bouchard (alexandre.bouchard@gmail.com)
- *
  */
 @Tutorial(order=0)
 public class Example
@@ -38,6 +36,10 @@ public class Example
    * ```java
    * @Tutorial(order=1,showSource=true)
    * ```
+   * 
+   * The argument order controls the order of tutorial nodes. The argument 
+   * ``showSource=true`` makes the code below the annotation 
+   * appears. This is rendered as shown below.
    */
   @Tutorial(order=1,showSource=true)
   public static void example()

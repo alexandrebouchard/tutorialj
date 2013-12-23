@@ -1,4 +1,3 @@
-Signature:class tutorialj.Example
 Summary
 -------
 
@@ -19,12 +18,9 @@ Installation
 
 TODO
 
-@author Alexandre Bouchard (alexandre.bouchard@gmail.com)
 
 
 
-
-Signature:void example()
 Usage
 -----
 
@@ -33,6 +29,10 @@ method, class, field, or constructor:
 ```java
 @Tutorial(order=1,showSource=true)
 ```
+
+The argument order controls the order of tutorial nodes. The argument 
+``showSource=true`` makes the code below the annotation 
+appears. This is rendered as shown below.
 
 
 ```java
