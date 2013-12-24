@@ -22,7 +22,7 @@ the following to your project gradle script
 
 ```groovy
 dependencies {
-  compile group: 'com.3rdf', name: 'tutorialj', version: '1.0'
+  compile group: 'com.3rdf', name: 'tutorialj', version: '1.2'
 {
 repositories {
   mavenCentral()
