@@ -16,9 +16,9 @@ public class Main
       System.exit(1);
     }
     
-    System.setErr(new PrintStream(new OutputStream() {
-      @Override public void write(int b) throws IOException {}
-    }));
+//    System.setErr(new PrintStream(new OutputStream() {
+//      @Override public void write(int b) throws IOException {}
+//    }));
     String [] spoonArguments = {"-i", args[0], "-p", "tutorialj.GenerateTutorials"};
     Launcher.main(spoonArguments);
   }

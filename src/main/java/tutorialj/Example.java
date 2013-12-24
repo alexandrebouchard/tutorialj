@@ -21,10 +21,23 @@ package tutorialj;
  * ------------
  * 
  * - Compile using ``gradle installApp``
- * - Add the generated folder ``build/install/tutorialj/bin`` into your classpath
  * - Add the jars in  ``build/install/tutorialj/lib/`` to your classpath, OR, add
  * the following to your project gradle script 
- * ```compile group: 'com.3rdf', name: 'tutorialj', version: '1.0'```
+ * ```
+ * dependencies {
+ *   compile group: 'com.3rdf', name: 'tutorialj', version: '1.0'
+ * {
+ * repositories {
+ *   mavenCentral()
+ *   jcenter()
+ *   maven {
+ *     url "http://www.stat.ubc.ca/~bouchard/maven/"
+ *   }
+ *   maven {
+ *     url "http://spoon.gforge.inria.fr/repositories/releases/"
+ *   }
+ * }
+ * ```
  * 
  */
 @Tutorial(order=0)
@@ -52,15 +65,19 @@ public class Example
   }
   
   /**
-   * Use ``tutorialj [src]`` to output to standard out the tutorial in markdown,
+   * Use 
+   * ```
+   * java -cp [all your dependencies and tutorialj's] spoon.Launcher -i [src] -p tutorialj.GenerateTutorials 
+   * ``` 
+   * to output to standard out the tutorial in markdown,
    * where ``[src]`` is the root src folder. For example, this page was 
    * generated using
    * ```bash
-   * tutorialj src/main/java/ > README.md 
+   * java -cp build/install/tutorialj/lib/\* spoon.Launcher -i src/main/java/ -p tutorialj.GenerateTutorials > README.md 
    * ```
-   * ran from the repository root.
+   * ran from the repository root. Note that the spoon parser used by this library may output spurious warning messages.
    * 
-   * See ``tutorialj.Example`` for the generating source.
+   * See ``tutorialj.Example`` for the generating source of this markdown page.
    */
   @Tutorial(order=2)
   public static void example2() {}
