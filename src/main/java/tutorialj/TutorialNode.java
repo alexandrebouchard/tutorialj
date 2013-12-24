@@ -37,6 +37,11 @@ public class TutorialNode implements Comparable<TutorialNode>
       result.append(removeFirstSpaceOfEachLine(comments) + "\n");
     if (annotation.showSource())
       result.append("```java\n" + codeWithoutComments(element) + "\n```\n");
+    if (annotation.showLink())
+    {
+      String className = element.getParent().getSignature().replaceFirst("(class|interface|[@]interface)\\s+", "");
+      result.append("<sub>From:[" + className + "](" + annotation.linkPrefix() + "/" + className.replace('.', '/') + ".java)</sub>\n");
+    }
     return result.toString();
   }
 
