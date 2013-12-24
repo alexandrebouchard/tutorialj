@@ -19,6 +19,7 @@ Installation
 - Compile using ``gradle installApp``
 - Add the jars in  ``build/install/tutorialj/lib/`` to your classpath, OR, add
 the following to your project gradle script 
+
 ```groovy
 dependencies {
   compile group: 'com.3rdf', name: 'tutorialj', version: '1.0'
