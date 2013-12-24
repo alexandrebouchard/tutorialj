@@ -58,7 +58,7 @@ public static void example() {
     java.lang.System.out.println("Hello, world!");
 }
 ```
-
+<sub>From:[tutorialj.Example](blob/master/src/main/java//tutorialj/Example.java)</sub>
 Use 
 ```
 java -cp [all your dependencies and tutorialj's] spoon.Launcher -i [src] -p tutorialj.GenerateTutorials 
@@ -87,6 +87,10 @@ public @interface Tutorial {
     boolean showSource() default false;
     
     double order() default 0.0;
+    
+    java.lang.String linkPrefix() default "blob/master/src/main/java/";
+    
+    boolean showLink() default false;
     
 }
 ```
