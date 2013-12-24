@@ -59,7 +59,7 @@ public static void example() {
     java.lang.System.out.println("Hello, world!");
 }
 ```
-<sub>From:[tutorialj.Example](src/main/java//tutorialj/Example.java)</sub>
+<sub>From:[tutorialj.Example](src/test/java//tutorialj/Example.java)</sub>
 
 Use 
 ```

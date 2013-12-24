@@ -59,7 +59,7 @@ public class Example
    * ``showSource=true`` makes the code below the annotation 
    * appears. This is rendered as shown below.
    */
-  @Tutorial(order=1, showSource=true, showLink=true)
+  @Tutorial(order=1, showSource=true, showLink=true, linkPrefix = "src/test/java/")
   public static void example()
   {
     System.out.println("Hello, world!");
