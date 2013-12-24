@@ -8,7 +8,7 @@ apply plugin: 'maven'
 uploadArchives {
   repositories.mavenDeployer {
     repository(url: "file:///Users/bouchard/Documents/web/public_html/maven/")
-    pom.version = "1.1"
+    pom.version = "1.2"
   	pom.artifactId = "tutorialj"
   	pom.groupId = "com.3rdf"
   }
