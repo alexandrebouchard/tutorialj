@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.SOURCE)
 @Target({ElementType.CONSTRUCTOR,ElementType.FIELD, ElementType.METHOD, ElementType.TYPE})
-@Tutorial(order=3, showLink=true, linkTextPrefix = "See:", linkTextSuffix = "")
+@Tutorial(order = 3, showLink = true, linkTextPrefix = "See: ", linkTextSuffix = "")
 public @interface Tutorial
 {
   /**
