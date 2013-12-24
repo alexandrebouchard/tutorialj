@@ -39,12 +39,19 @@ public class TutorialNode implements Comparable<TutorialNode>
       result.append("```java\n" + codeWithoutComments(element) + "\n```\n");
     if (annotation.showLink())
     {
-      String className = element.getParent().getSignature().replaceFirst("(class|interface|[@]interface)\\s+", "");
+      String className = getClassName(element);
       result.append(annotation.linkTextPrefix() 
           + "[" + className + "](" + annotation.linkPrefix() + "/" + className.replace('.', '/') 
           + ".java)" + annotation.linkTextSuffix() + "\n");
     }
     return result.toString();
+  }
+
+  private String getClassName(CtElement element)
+  {
+    if (!element.getSignature().matches("^(class|interface|[@]interface).*"))
+      element = element.getParent();
+    return element.getSignature().replaceFirst("(class|interface|[@]interface)\\s+", "");
   }
 
   private static String removeFirstSpaceOfEachLine(String comments)
