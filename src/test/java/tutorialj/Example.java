@@ -58,7 +58,7 @@ public class Example
    * ``showSource=true`` makes the code below the annotation 
    * appears. This is rendered as shown below.
    */
-  @Tutorial(order=1,showSource=true,showLink=true)
+  @Tutorial(order=1, showSource=true, showLink=true)
   public static void example()
   {
     System.out.println("Hello, world!");
@@ -67,18 +67,21 @@ public class Example
   /**
    * Use 
    * ```
-   * java -cp [all your dependencies and tutorialj's] spoon.Launcher -i [src] -p tutorialj.GenerateTutorials 
+   * java -cp [all your dependencies and tutorialj's] tutorialj.Main [src]
    * ``` 
    * to output to standard out the tutorial in markdown,
-   * where ``[src]`` is the root src folder. For example, this page was 
+   * where ``[src]`` is the root src folder (if more than one, separate by :). For example, this page was 
    * generated using
    * ```bash
-   * java -cp build/install/tutorialj/lib/\* spoon.Launcher -i src/main/java/ -p tutorialj.GenerateTutorials > README.md 
+   * java -cp build/install/tutorialj/lib/\* tutorialj.Main src/main/java/:src/test/java/ > README.md 
    * ```
-   * ran from the repository root. Note that the spoon parser used by this library may output spurious warning messages.
-   * 
-   * See ``tutorialj.Example`` for the generating source of this markdown page.
+   * ran from the repository root. Note that the spoon parser used by this 
+   * library may output spurious warning messages without affecting the 
+   * process. If, however, dependencies are not in the classpath (for example,
+   * junit in the compile unit), some nodes might be skipped. To avoid this,
+   * make sure all the depencies of the program you are generating a tutorial
+   * for are in the classpath.
    */
   @Tutorial(order=2)
-  public static void example2() {}
+  public static void dummy() {}
 }

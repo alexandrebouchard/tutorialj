@@ -40,7 +40,9 @@ public class TutorialNode implements Comparable<TutorialNode>
     if (annotation.showLink())
     {
       String className = element.getParent().getSignature().replaceFirst("(class|interface|[@]interface)\\s+", "");
-      result.append("<sub>From:[" + className + "](" + annotation.linkPrefix() + "/" + className.replace('.', '/') + ".java)</sub>\n");
+      result.append(annotation.linkTextPrefix() 
+          + "[" + className + "](" + annotation.linkPrefix() + "/" + className.replace('.', '/') 
+          + ".java)" + annotation.linkTextSuffix() + "\n");
     }
     return result.toString();
   }

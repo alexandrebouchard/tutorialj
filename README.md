@@ -62,17 +62,20 @@ public static void example() {
 
 Use 
 ```
-java -cp [all your dependencies and tutorialj's] spoon.Launcher -i [src] -p tutorialj.GenerateTutorials 
+java -cp [all your dependencies and tutorialj's] tutorialj.Main [src]
 ``` 
 to output to standard out the tutorial in markdown,
-where ``[src]`` is the root src folder. For example, this page was 
+where ``[src]`` is the root src folder (if more than one, separate by :). For example, this page was 
 generated using
 ```bash
-java -cp build/install/tutorialj/lib/\* spoon.Launcher -i src/main/java/ -p tutorialj.GenerateTutorials > README.md 
+java -cp build/install/tutorialj/lib/\* tutorialj.Main src/main/java/:src/test/java/ > README.md 
 ```
-ran from the repository root. Note that the spoon parser used by this library may output spurious warning messages.
-
-See ``tutorialj.Example`` for the generating source of this markdown page.
+ran from the repository root. Note that the spoon parser used by this 
+library may output spurious warning messages without affecting the 
+process. If, however, dependencies are not in the classpath (for example,
+junit in the compile unit), some nodes might be skipped. To avoid this,
+make sure all the depencies of the program you are generating a tutorial
+for are in the classpath.
 
 
 
@@ -80,19 +83,5 @@ API
 ---
 
 
-```java
-
-@java.lang.annotation.Retention(value = java.lang.annotation.RetentionPolicy.SOURCE)
-@java.lang.annotation.Target(value = {java.lang.annotation.ElementType.CONSTRUCTOR ,java.lang.annotation.ElementType.FIELD ,java.lang.annotation.ElementType.METHOD ,java.lang.annotation.ElementType.TYPE})
-public @interface Tutorial {
-    boolean showSource() default false;
-    
-    double order() default 0.0;
-    
-    java.lang.String linkPrefix() default "src/main/java/";
-    
-    boolean showLink() default false;
-    
-}
-```
+See:[tutorialj](src/main/java//tutorialj.java)
 

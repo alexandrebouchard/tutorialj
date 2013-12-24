@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.SOURCE)
 @Target({ElementType.CONSTRUCTOR,ElementType.FIELD, ElementType.METHOD, ElementType.TYPE})
-@Tutorial(order=3,showSource=true)
+@Tutorial(order=3, showLink=true, linkTextPrefix = "See:", linkTextSuffix = "")
 public @interface Tutorial
 {
   /**
@@ -35,4 +35,14 @@ public @interface Tutorial
    * @return Whether a link to the source code should be shown in this tutorial step
    */
   boolean showLink() default false;
+  
+  /**
+   * @return Text before the link
+   */
+  String linkTextPrefix() default "<sub>From:";
+  
+  /**
+   * @return Text after the link
+   */
+  String linkTextSuffix() default "</sub>";
 }
