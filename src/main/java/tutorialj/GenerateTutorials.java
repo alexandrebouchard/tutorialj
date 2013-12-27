@@ -32,7 +32,7 @@ import static com.google.common.base.Optional.*;
 public class GenerateTutorials extends
     AbstractAnnotationProcessor<Tutorial, CtElement> 
 { 
-  private List<TutorialNode> nodes = Lists.newArrayList();
+  private List<TutorialNode> tutorialNodesInOrder = Lists.newArrayList();
   
   private Map<String, LinkedList<TutorialNode>> nodesPerTypeName = Maps.newHashMap();
   private String startType = null;
@@ -62,7 +62,7 @@ public class GenerateTutorials extends
     
     out.append(commentLine + "\n");
     
-    for (TutorialNode node : nodes)
+    for (TutorialNode node : tutorialNodesInOrder)
       out.append(node.toString() + "\n");
     
     try
@@ -104,17 +104,17 @@ public class GenerateTutorials extends
   /**
    * Nodes are traversed recursively as follows, where the method is
    * first called with the type declaring the ``tutorialStart`` argument
-   * @param currentType
    */
   @Tutorial(showSource=true, showLink = true)
   private void traverseOrder(String currentType)
   {
     // consume node until a jump is found
-    LinkedList<TutorialNode> currentQueue = fromNullable(nodesPerTypeName.get(currentType)).or(Lists.<TutorialNode>newLinkedList());
+    LinkedList<TutorialNode> currentQueue = 
+      fromNullable(nodesPerTypeName.get(currentType)).or(Lists.<TutorialNode>newLinkedList());
     while (!currentQueue.isEmpty())
     {
       TutorialNode current = currentQueue.pollFirst();
-      nodes.add(current);
+      tutorialNodesInOrder.add(current);
       if (current.hasJump())
         traverseOrder(current.getJumpTarget());
     }
@@ -138,25 +138,10 @@ public class GenerateTutorials extends
       startType = node.getEnclosingTypeName();
       outputName = tutorialEntry.startTutorial();
     }
-    
-//    System.err.println(element.);
-//    System.err.println(element.getSignature() + ":" + element.getPosition().getLine() + " to " + element.getPosition().getEndLine());
-//    System.err.println(element.getSignature() + ":" + element.getPosition().getSourceStart() + " to " + element.getPosition().getSourceEnd());
-//    System.err.println(element.getPosition().getCompilationUnit().getOriginalSourceCode());
-//    nodes.add(node);
   }
-
-  // stack base solution:
-  // tag for starting a tutorial
-  // order each class by line number, create queues
-  // dequeue under this order, recurse if jumpTo found
-
-  
   // Note to self: to install Jekyll:
   // sudo gem update --system 
   // bis?!
   // sudo gem install jekyll
   // sudo gem install json
-  
-  
 }

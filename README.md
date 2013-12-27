@@ -21,7 +21,7 @@ There are two ways to install:
 
 ### Integrate to a gradle script
 
-Simply add the following lines (replacing 1.3.8 by the current version):
+Simply add the following lines (replacing 1.3.10 by the current version):
 
 ```groovy
 repositories {
@@ -31,7 +31,7 @@ repositories {
 }
 
 dependencies {
-  compile group: 'com.3rdf', name: 'tutorialj', version: '1.3.8'
+  compile group: 'com.3rdf', name: 'tutorialj', version: '1.3.10'
 }
 
 task(tutorialj, dependsOn: ['build','testClasses'], type: JavaExec) {
@@ -49,13 +49,18 @@ task(tutorialj, dependsOn: ['build','testClasses'], type: JavaExec) {
 - Check out the source ``git clone git@github.com:alexandrebouchard/tutorialj.git``
 - Compile using ``gradle installApp``
 - Add the jars in  ``build/install/tutorialj/lib/`` to your classpath
+- Add ``build/install/tutorialj/bin/`` to your path
 
 Usage
 -----
 
 ### Creating a basic tutorial
 
-To create the first step of a tutorial, add the following tag above a 
+Tutorials are just sequences of nodes. Each node is a javadoc comment, with its
+contents rendered as markdown, and optionally, source code and/or link to javadoc/full
+code browser.
+
+To create the first step/node of a tutorial, add the following tag above a 
 method, class, field, or constructor:
 ```java
 @Tutorial(startTutorial = "README.md")
@@ -68,10 +73,11 @@ the tag.
 
 
 
-To display the contents of other javadoc in the same source file, use
+To display the contents of other javadoc blocks in the same source file, use
 ```java
 @Tutorial
 ```
+above each desired method, field or constructor.
 
 The nodes will be displayed in the same order as they appear in the file.
 
@@ -94,7 +100,7 @@ public static void example() {
 ### Generating the tutorial
 
 To generate the tutorial using the gradle method, simply type ``gradle tutorialj``.
-To do it using the command line application, use 
+To do it using the command line application, use:
 ```
 java -cp [all your dependencies and tutorialj's] tutorialj.Main --sourceFiles [src]
 ``` 
@@ -121,7 +127,6 @@ for example:
 
 Nodes are traversed recursively as follows, where the method is
 first called with the type declaring the ``tutorialStart`` argument
-@param currentType
 
 
 ```java
@@ -130,7 +135,7 @@ private void traverseOrder(java.lang.String currentType) {
     java.util.LinkedList<tutorialj.TutorialNode>  currentQueue = com.google.common.base.Optional.fromNullable(nodesPerTypeName.get(currentType)).or(com.google.common.collect.Lists.<tutorialj.TutorialNode>newLinkedList());
     while (!(currentQueue.isEmpty())) {
         tutorialj.TutorialNode current = currentQueue.pollFirst();
-        nodes.add(current);
+        tutorialNodesInOrder.add(current);
         if (current.hasJump())
             traverseOrder(current.getJumpTarget());
         
