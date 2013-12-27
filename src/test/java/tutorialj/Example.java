@@ -41,7 +41,7 @@ package tutorialj;
  * ```
  * 
  */
-@Tutorial(order=0)
+@Tutorial(startTutorial = "README.md")
 public class Example
 {
   
@@ -59,7 +59,7 @@ public class Example
    * ``showSource=true`` makes the code below the annotation 
    * appears. This is rendered as shown below.
    */
-  @Tutorial(order=1, showSource=true, showLink=true, linkPrefix = "src/test/java/")
+  @Tutorial(showSource=true, showLink=true, linkPrefix = "src/test/java/")
   public static void example()
   {
     System.out.println("Hello, world!");
@@ -83,6 +83,6 @@ public class Example
    * make sure all the depencies of the program you are generating a tutorial
    * for are in the classpath.
    */
-  @Tutorial(order=2)
+  @Tutorial(nextStep = Tutorial.class)
   public static void dummy() {}
 }

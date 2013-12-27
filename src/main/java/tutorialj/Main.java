@@ -1,21 +1,84 @@
 package tutorialj;
 
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
+
+import com.beust.jcommander.JCommander;
+import com.beust.jcommander.Parameter;
+
+
 import spoon.Launcher;
 
 public class Main
 {
+  public static boolean success = false;
+  
+  @Parameter(names = "--sourceFiles")
+  private String sourceFiles = "src/main/java:src/test/java";
+  
+  @Parameter(names = "--verbose")
+  private boolean verbose = false;
+  
+  
   public static void main(String [] args) throws Exception
   {
-    if (args.length != 1)
+    Main main = new Main();
+    new JCommander(main, args);
+    main.run();
+  }
+
+  void run()
+  {
+    try
     {
-      System.out.println("1 argument: path to sources");
-      System.exit(1);
+      PrintStream saved = System.err;
+      if (!verbose)
+        System.setErr(new PrintStream(new OutputStream() {
+          @Override
+          public void write(int arg0) throws IOException
+          {
+            ;
+          }}));
+       
+      String [] spoonArguments = {"--no", "-i", sourceFiles, "-p", "tutorialj.GenerateTutorials"};
+      new Launcher(spoonArguments).run();
+      System.setErr(saved);
+      if (!success)
+        System.err.println("Problems encountered, use --verbose for details.");
     }
-    
-//    System.setErr(new PrintStream(new OutputStream() {
-//      @Override public void write(int b) throws IOException {}
-//    }));
-    String [] spoonArguments = {"-i", args[0], "-p", "tutorialj.GenerateTutorials"};
-    Launcher.main(spoonArguments);
+    catch (Throwable e)
+    {
+      if (verbose)
+        throw new RuntimeException(e);
+      else
+        System.out.println(e.getMessage() + "\nUse --verbose for details.");
+//      throw new RuntimeException(e);
+//      System.out.println(e.getMessage());
+//      System.err.println("First time: " + e.toString());
+//      System.err.println();
+////      while (e.getCause() != null)
+////      {
+////        e = e.getCause();
+////        System.err.println("GOING UP");
+////        System.err.println();
+////      }
+////      System.err.println(e.getMessage());
+////      System.err.println();
+////      System.err.println(e.getLocalizedMessage());
+//      System.err.println();
+//      System.err.println("Second time: " + e.toString());
+//      System.err.println("Third time: " + e.toString());
+    }
+  }
+
+  public String getSourceFiles()
+  {
+    return sourceFiles;
+  }
+
+  public void setSourceFiles(String sourceFiles)
+  {
+    this.sourceFiles = sourceFiles;
   }
 }

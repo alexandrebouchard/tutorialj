@@ -1,31 +1,53 @@
 package tutorialj;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 import spoon.reflect.declaration.CtElement;
 
+import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 
 
 
-public class TutorialNode implements Comparable<TutorialNode>
+public class TutorialNode //implements Comparable<TutorialNode>
 {
   private final Tutorial annotation;
   private final CtElement element;
-  private final double priority;
+//  private final double priority;
   
   public TutorialNode(Tutorial annotation, CtElement element)
   {
     this.annotation = annotation;
     this.element = element;
-    this.priority = priority();
+//    this.priority = priority();
   }
 
-  private double priority()
+//  private double priority()
+//  {
+//    // induces a unique, deterministic order
+//    double jitter = new Random(element.getSignature().hashCode()).nextDouble() / 10.0;
+//    return jitter + annotation.order();
+//  }
+  
+  public boolean hasJump()
   {
-    // induces a unique, deterministic order
-    double jitter = new Random(element.getSignature().hashCode()).nextDouble() / 10.0;
-    return jitter + annotation.order();
+    if (annotation.nextStep() == null) return false;
+    if (annotation.nextStep().equals(NoJump.class)) return false;
+    return true;
+  }
+  
+  public String getJumpTarget() 
+  { 
+    return removeFirstPartOfSignature(annotation.nextStep().toString());
+  }
+  
+  public boolean isTutorialStart()
+  {
+    if (annotation.startTutorial() == null) return false;
+    if (annotation.startTutorial().equals("")) return false;
+    return true;
   }
 
   @Override
@@ -39,7 +61,7 @@ public class TutorialNode implements Comparable<TutorialNode>
       result.append("```java\n" + codeWithoutComments(element) + "\n```\n");
     if (annotation.showLink())
     {
-      String className = getClassName(element);
+      String className = getEnclosingTypeName();
       result.append(annotation.linkTextPrefix() 
           + "[" + className + "](" + annotation.linkPrefix() + "/" + className.replace('.', '/') 
           + ".java)" + annotation.linkTextSuffix() + "\n");
@@ -47,11 +69,27 @@ public class TutorialNode implements Comparable<TutorialNode>
     return result.toString();
   }
 
-  private String getClassName(CtElement element)
+//  public String getTypeName()
+//  {
+//    return getTypeName(this.element);
+//  }
+  
+  public int getLineNumber()
   {
-    if (!element.getSignature().matches("^(class|interface|[@]interface).*"))
-      element = element.getParent();
-    return element.getSignature().replaceFirst("(class|interface|[@]interface)\\s+", "");
+    return element.getPosition().getLine() - 1;
+  }
+  
+  public String getEnclosingTypeName()
+  {
+    CtElement element = this.element.getPosition().getCompilationUnit().getMainType();
+//    if (!element.getSignature().matches("^(class|interface|[@]interface).*"))
+//      element = element.getParent();
+    return removeFirstPartOfSignature(element.getSignature());
+  }
+  
+  private static String removeFirstPartOfSignature(String s)
+  {
+    return s.replaceFirst("(class|interface|[@]interface)\\s+", "");
   }
 
   private static String removeFirstSpaceOfEachLine(String comments)
@@ -68,17 +106,28 @@ public class TutorialNode implements Comparable<TutorialNode>
 
   private static String codeWithoutComments(CtElement element)
   {
-    return element.toString()
+    String initial = 
+      
+      element.toString()
+    
+//      element.getPosition().getCompilationUnit().getOriginalSourceCode().substring(element.getParent().getPosition().getSourceStart(), element.getParent().getPosition().getSourceEnd())
+    ;
+    
+//    int startPosition = element.getPosition().getLine() - 1;
+//    int length = element.getPosition().getSourceEnd() - element.getPosition().getSourceStart();
+//    List<String> rawSource = Arrays.asList(element.getPosition().getCompilationUnit().getOriginalSourceCode().split("\n"));
+    return //Joiner.on('\n').join(rawSource.subList(startPosition, startPosition + length))
+        initial
       .replaceFirst("/\\*\\*(?s:(?!\\*/).)*\\*/", "") // remove javadoc comment
       .replaceFirst("@Tutorial\\s*([(][^)]+[)])?", "") // remove annotation
       ;
   }
 
-  @Override
-  public int compareTo(TutorialNode o)
-  {
-    return Double.compare(this.priority, o.priority);
-  }
-  
+//  @Override
+//  public int compareTo(TutorialNode o)
+//  {
+//    return Double.compare(this.priority, o.priority);
+//  }
+//  
   
 }
