@@ -21,7 +21,7 @@ public @interface Tutorial
   boolean showSource() default false;
   
   /**
-   * @return W
+   * @return Which .java file to recursively jump to, if any.
    */
   Class<?> nextStep() default NoJump.class;
   
