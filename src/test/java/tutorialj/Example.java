@@ -28,6 +28,8 @@ package tutorialj;
  * 
  * ```groovy
  * repositories {
+ *  mavenCentral()
+ *  jcenter()
  *  maven {
  *     url "http://www.stat.ubc.ca/~bouchard/maven/"
  *   }
