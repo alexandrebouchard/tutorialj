@@ -101,6 +101,12 @@ public class GenerateTutorials extends
     return startType != null;
   }
 
+  /**
+   * Nodes are traversed recursively as follows, where the method is
+   * first called with the type declaring the ``tutorialStart`` argument
+   * @param currentType
+   */
+  @Tutorial(showSource=true, showLink = true)
   private void traverseOrder(String currentType)
   {
     // consume node until a jump is found
