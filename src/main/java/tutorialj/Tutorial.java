@@ -6,25 +6,28 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-/**
- * API
- * ---
- */
 @Retention(RetentionPolicy.SOURCE)
-@Target({ElementType.CONSTRUCTOR,ElementType.FIELD, ElementType.METHOD, ElementType.TYPE})
-@Tutorial(showLink = true, linkTextPrefix = "See: ", linkTextSuffix = "")
+@Target(ElementType.METHOD)
 public @interface Tutorial
 {
   /**
-   * @return Whether the source code should be displayed in this tutorial step
+   * @return Whether the code of this method/function body should be displayed
    */
-  boolean showSource() default false;
+  boolean showSource() default true;
+  
+  /**
+   * @return Whether the signature of this method/function should be displayed
+   */
+  boolean showSignature() default false;
   
   /**
    * @return Which .java file to recursively jump to, if any.
    */
   Class<?> nextStep() default NoJump.class;
   
+  /**
+   * @return The identifier of the tutorial, currently also used as the name of the file to output to 
+   */
   String startTutorial() default "";
   
   /**

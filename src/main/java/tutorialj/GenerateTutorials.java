@@ -1,5 +1,7 @@
 package tutorialj;
 
+import static com.google.common.base.Optional.fromNullable;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
@@ -7,21 +9,14 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Queue;
-
-import javax.media.jai.IntegerSequence;
 
 import spoon.processing.AbstractAnnotationProcessor;
 import spoon.reflect.declaration.CtElement;
 
 import com.google.common.base.Charsets;
-import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.io.Files;
-import com.sun.org.apache.xml.internal.resolver.helpers.FileURL;
-
-import static com.google.common.base.Optional.*;
 
 
 /**

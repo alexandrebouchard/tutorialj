@@ -1,35 +1,23 @@
 package tutorialj;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
-
+import spoon.reflect.cu.SourcePosition;
 import spoon.reflect.declaration.CtElement;
+import spoon.reflect.declaration.CtMethod;
 
 import com.google.common.base.Joiner;
-import com.google.common.base.Splitter;
 
 
 
-public class TutorialNode //implements Comparable<TutorialNode>
+public class TutorialNode 
 {
   private final Tutorial annotation;
-  private final CtElement element;
-//  private final double priority;
+  private final CtMethod<?> element;
   
   public TutorialNode(Tutorial annotation, CtElement element)
   {
     this.annotation = annotation;
-    this.element = element;
-//    this.priority = priority();
+    this.element = (CtMethod<?>) element;
   }
-
-//  private double priority()
-//  {
-//    // induces a unique, deterministic order
-//    double jitter = new Random(element.getSignature().hashCode()).nextDouble() / 10.0;
-//    return jitter + annotation.order();
-//  }
   
   public boolean hasJump()
   {
@@ -57,8 +45,23 @@ public class TutorialNode //implements Comparable<TutorialNode>
     String comments = element.getDocComment();
     if (comments != null)
       result.append(removeFirstSpaceOfEachLine(comments) + "\n");
+    
+    StringBuilder sourceBlock = new StringBuilder();
+    if (annotation.showSignature())
+      sourceBlock.append(fullSignature(element) + "\n");
     if (annotation.showSource())
-      result.append("```java\n" + codeWithoutComments(element) + "\n```\n");
+    {
+      if (annotation.showSignature()) sourceBlock.append("{\n");
+      sourceBlock.append(code(element).replaceFirst("\\n\\s+$", "\n"));
+      if (annotation.showSignature()) sourceBlock.append("}\n");
+    }
+    if (sourceBlock.length() > 0)
+    {
+      result.append("```java\n");
+      result.append(removeManyFirstSpacesOfEachLine(sourceBlock.toString())); // + "\n"); already a trailing new line in removeManyFirstSpacesOfEachLine()
+      result.append("```\n");
+    }
+    
     if (annotation.showLink())
     {
       String className = getEnclosingTypeName();
@@ -68,11 +71,6 @@ public class TutorialNode //implements Comparable<TutorialNode>
     }
     return result.toString();
   }
-
-//  public String getTypeName()
-//  {
-//    return getTypeName(this.element);
-//  }
   
   public int getLineNumber()
   {
@@ -82,8 +80,6 @@ public class TutorialNode //implements Comparable<TutorialNode>
   public String getEnclosingTypeName()
   {
     CtElement element = this.element.getPosition().getCompilationUnit().getMainType();
-//    if (!element.getSignature().matches("^(class|interface|[@]interface).*"))
-//      element = element.getParent();
     return removeFirstPartOfSignature(element.getSignature());
   }
   
@@ -95,7 +91,7 @@ public class TutorialNode //implements Comparable<TutorialNode>
   private static String removeFirstSpaceOfEachLine(String comments)
   {
     StringBuilder result = new StringBuilder();
-    for (String line : Splitter.on("\n").split(comments))
+    for (String line : comments.split("\\n")) //Splitter.on("\n").split(comments))
     {
       if (!line.isEmpty() && line.charAt(0) == ' ')
         line = line.substring(1);
@@ -103,31 +99,41 @@ public class TutorialNode //implements Comparable<TutorialNode>
     }
     return result.toString();
   }
-
-  private static String codeWithoutComments(CtElement element)
+  
+  private static String removeManyFirstSpacesOfEachLine(String contents)
   {
-    String initial = 
-      
-      element.toString()
-    
-//      element.getPosition().getCompilationUnit().getOriginalSourceCode().substring(element.getParent().getPosition().getSourceStart(), element.getParent().getPosition().getSourceEnd())
-    ;
-    
-//    int startPosition = element.getPosition().getLine() - 1;
-//    int length = element.getPosition().getSourceEnd() - element.getPosition().getSourceStart();
-//    List<String> rawSource = Arrays.asList(element.getPosition().getCompilationUnit().getOriginalSourceCode().split("\n"));
-    return //Joiner.on('\n').join(rawSource.subList(startPosition, startPosition + length))
-        initial
-      .replaceFirst("/\\*\\*(?s:(?!\\*/).)*\\*/", "") // remove javadoc comment
-      .replaceFirst("@Tutorial\\s*([(][^)]+[)])?", "") // remove annotation
-      ;
+    int min = Integer.MAX_VALUE;
+    for (String line : contents.split("\\n")) //Splitter.on("\n").split(contents))
+      if (!line.matches("^\\s*$"))
+      {
+        int current = 0;
+        inner:for (char aChar : line.toCharArray())
+          if (aChar == ' ')
+            current++;
+          else
+            break inner;
+        if (current < min)
+          min = current;
+      }
+    StringBuilder result = new StringBuilder();
+    for (String line : contents.split("\\n")) //Splitter.on("\n").split(contents))
+      result.append((line.matches("^\\s*$") ? "" : line.substring(min)) + "\n");
+    return result.toString();
+  }
+  
+  private static String fullSignature(CtMethod<?> m)
+  {
+    return 
+      (m.getModifiers().isEmpty() ? "" : Joiner.on(" ").join(m.getModifiers()) + " ") + 
+      m.getSignature() + 
+      (m.getThrownTypes().isEmpty() ? "" : " throws " + Joiner.on(", ").join(m.getThrownTypes()));
   }
 
-//  @Override
-//  public int compareTo(TutorialNode o)
-//  {
-//    return Double.compare(this.priority, o.priority);
-//  }
-//  
+  private static String code(CtMethod<?> m) 
+  {
+    SourcePosition p =  m.getBody().getPosition();
+    return m.getPosition().getCompilationUnit().getOriginalSourceCode().substring(p.getSourceStart(), p.getSourceEnd()).replaceFirst("^\\s*\\n", "");
+  }
+
   
 }
