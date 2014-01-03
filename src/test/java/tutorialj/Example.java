@@ -154,7 +154,7 @@ public class Example
    * Links to an html javadoc/full code browser can be 
    * created via the ``showLink = true`` argument. 
    */
-  @Tutorial(showSource = false, showLink = true, linkTextPrefix = "Full source of this tutorial: ", linkTextSuffix = "")
+  @Tutorial(showSource = false, showLink = true, linkTextPrefix = "Full source of this tutorial: ", linkTextSuffix = "", linkPrefix = "src/test/java/")
   public static void example3()
   {
     

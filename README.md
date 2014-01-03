@@ -158,5 +158,5 @@ while (!currentQueue.isEmpty())
 Links to an html javadoc/full code browser can be 
 created via the ``showLink = true`` argument. 
 
-Full source of this tutorial: [tutorialj.Example](src/main/java//tutorialj/Example.java)
+Full source of this tutorial: [tutorialj.Example](src/test/java//tutorialj/Example.java)
 
