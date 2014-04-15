@@ -53,22 +53,7 @@ public class Main
         throw new RuntimeException(e);
       else
         System.out.println(e.getMessage() + "\nUse --verbose for details.");
-//      throw new RuntimeException(e);
-//      System.out.println(e.getMessage());
-//      System.err.println("First time: " + e.toString());
-//      System.err.println();
-////      while (e.getCause() != null)
-////      {
-////        e = e.getCause();
-////        System.err.println("GOING UP");
-////        System.err.println();
-////      }
-////      System.err.println(e.getMessage());
-////      System.err.println();
-////      System.err.println(e.getLocalizedMessage());
-//      System.err.println();
-//      System.err.println("Second time: " + e.toString());
-//      System.err.println("Third time: " + e.toString());
+
     }
   }
 

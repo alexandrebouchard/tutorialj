@@ -4,9 +4,9 @@ apply plugin: 'maven'
 uploadArchives {
   repositories.mavenDeployer {
     repository(url: "file:///Users/bouchard/Documents/web/public_html/maven/")
-    pom.version = "2.0.0"
+    pom.version = "2.0.2"
   	pom.artifactId = "tutorialj"
-  	pom.groupId = "com.3rdf"
+  	pom.groupId = "ca.ubc.stat"
   }
 }
 
@@ -29,7 +29,7 @@ dependencies {
   testCompile group: 'junit', name: 'junit', version: '4.11'
   compile group: 'junit', name: 'junit', version: '4.11'
   compile group: 'com.beust', name: 'jcommander', version: '1.30'
-  compile group: 'fr.inria.gforge.spoon', name: 'spoon-core', version: '1.5'
+  compile group: 'fr.inria.gforge.spoon', name: 'spoon-core', version: '1.6'
 }
 
 apply plugin:'application'  
@@ -41,6 +41,19 @@ task(tutorialj, dependsOn: ['build','testClasses'], type: JavaExec) {
   	configurations.compile
   	sourceSets.main.runtimeClasspath
   	sourceSets.test.runtimeClasspath
+  }
+}
+
+apply plugin: 'versions'
+
+buildscript {
+  repositories {
+    maven { url "https://github.com/ben-manes/gradle-versions-plugin/raw/mvnrepo" }
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath 'com.github.ben-manes:gradle-versions-plugin:0.5-beta-1'
   }
 }
 
