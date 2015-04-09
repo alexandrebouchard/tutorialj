@@ -41,8 +41,8 @@ public class Main
             ;
           }}));
        
-      String [] spoonArguments = {"--no", "-i", sourceFiles, "-p", "tutorialj.GenerateTutorials"};
-      new Launcher(spoonArguments).run();
+      String [] spoonArguments = {/*"--no",*/ "-i", sourceFiles, "-p", "tutorialj.GenerateTutorials"};
+      Launcher.main(spoonArguments);
       System.setErr(saved);
       if (!success)
         System.err.println("Problems encountered, use --verbose for details.");
